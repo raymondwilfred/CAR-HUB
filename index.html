@@ -5,15 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Car Hub</title>
   <style>
-    /* Reset & Base */
-    * {
+     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: Verdana, sans-serif;
     }
     body {
-      /* Animated two-color background gradient */
       background: linear-gradient(-45deg, #4facfe, #00f2fe);
       background-size: 400% 400%;
       animation: gradientBG 15s ease infinite;
@@ -27,7 +25,6 @@
       100% {background-position: 0% 50%;}
     }
 
-    /* Navbar */
     nav.navbar {
       background: rgba(23, 244, 244, 0.9);
       padding: 1rem 2rem;
@@ -74,7 +71,6 @@
       outline: none;
     }
 
-    /* Home Section */
     section.home {
       padding: 6rem 2rem 4rem;
       max-width: 900px;
@@ -95,7 +91,6 @@
       user-select: none;
     }
 
-    /* Car Grid */
     section#cars {
       max-width: 1200px;
       margin: 0 auto 3rem;
@@ -163,7 +158,6 @@
       user-select: none;
     }
 
-    /* Contact Section */
     section.contact-container {
       max-width: 900px;
       margin: 0 auto 3rem;
@@ -196,7 +190,6 @@
       font-size: 0.9rem;
     }
 
-    /* Booking Section */
     section.order {
       max-width: 450px;
       margin: 0 auto 3rem;
@@ -250,7 +243,6 @@
 </head>
 <body>
 
-  <!-- Navbar -->
   <nav class="navbar" role="navigation" aria-label="Main Navigation">
     <div class="logo" tabindex="0">CH🚗</div>
     <a href="#home" class="brand"><h1>CAR HUB</h1></a>
@@ -262,18 +254,15 @@
     </ul>
   </nav>
 
-  <!-- Home Section -->
   <section id="home" class="home" tabindex="0" aria-label="Welcome Section">
     <h1>Welcome to Car Hub</h1>
     <p>Your dream car is just a few clicks away. Select and book with confidence.</p>
   </section>
 
-  <!-- Cars Section -->
   <section id="cars" aria-label="Available Cars">
     <h2>Our Cars</h2>
     <div class="car-grid" role="list">
 
-      <!-- 10 cars only -->
       <div class="car-card" role="listitem" data-brand="Maruti" data-model="Swift" data-price="₹5,20,000" tabindex="0">
         <img src="/images.jpeg"alt="Maruti Swift" />
         <div class="car-info">
@@ -359,7 +348,6 @@
     </div>
   </section>
 
-  <!-- Contact Section -->
   <section id="contact" class="contact-container" aria-label="Contact Information">
     <div class="address-card" tabindex="0">
       <h3>Address</h3>
@@ -375,7 +363,6 @@
     </div>
   </section>
 
-  <!-- Booking Section -->
   <section id="order" class="order" aria-label="Book Your Car">
     <h2>Book Your Dream Car</h2>
     <form id="booking-form" aria-live="polite" aria-describedby="form-status">
@@ -417,7 +404,6 @@
     </form>
   </section>
 <script>
-    // Select car card functionality
     const carCards = document.querySelectorAll(".car-card");
     let selectedCar = null;
 
@@ -430,7 +416,6 @@
         selectedCar = card;
       });
 
-      // Allow keyboard selection with Enter/Space
       card.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
@@ -439,7 +424,6 @@
       });
     });
 
-    // Simple form submission handler
     document.getElementById("booking-form").addEventListener("submit", function (e) {
       e.preventDefault();
       const name = this.name.value.trim();
@@ -466,3 +450,4 @@
 
 </body>
 </html>
+
