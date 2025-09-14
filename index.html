@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Car Hub</title>
+  <style>
+    /* Reset & Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Verdana, sans-serif;
+    }
+    body {
+      /* Animated two-color background gradient */
+      background: linear-gradient(-45deg, #4facfe, #00f2fe);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: #222;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    /* Navbar */
+    nav.navbar {
+      background: rgba(23, 244, 244, 0.9);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(175, 27, 30, 0.15);
+      backdrop-filter: saturate(180%) blur(10px);
+    }
+    nav .logo {
+      height: 50px;
+      border-radius: 8px;
+      background: #94d2bd;
+      padding: 4px 8px;
+      color: #24003d;
+      font-weight: bold;
+      font-size: 1.2rem;
+      user-select: none;
+    }
+    nav .brand {
+      color: #e0fbfc;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1.5rem;
+      letter-spacing: 1.5px;
+    }
+    nav ul.nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav ul.nav-links li a {
+      color: #e0fbfc;
+      font-weight: 700;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    nav ul.nav-links li a:hover,
+    nav ul.nav-links li a:focus {
+      color: #94d2bd;
+      outline: none;
+    }
+
+    /* Home Section */
+    section.home {
+      padding: 6rem 2rem 4rem;
+      max-width: 900px;
+      margin: 2rem auto 3rem;
+      text-align: center;
+      background: rgba(255 255 255 / 0.85);
+      color: #03045e;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(3, 37, 65, 0.2);
+    }
+    section.home h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      user-select: none;
+    }
+    section.home p {
+      font-size: 1.2rem;
+      user-select: none;
+    }
+
+    /* Car Grid */
+    section#cars {
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+      padding: 0 2rem;
+    }
+    section#cars h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      color: #023047;
+      user-select: none;
+      text-shadow: 1px 1px 3px rgba(255 255 255 / 0.7);
+    }
+    .car-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.8rem;
+    }
+    .car-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      outline-offset: 3px;
+      border: 2px solid transparent;
+    }
+    .car-card:hover,
+    .car-card:focus {
+      transform: scale(1.03);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      outline: none;
+    }
+    .car-card.selected {
+      border-color: #0077b6;
+      box-shadow: 0 0 12px 3px #0077b6;
+      transform: scale(1.05);
+    }
+    .car-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      user-select: none;
+    }
+    .car-info {
+      padding: 1rem;
+      text-align: left;
+    }
+    .car-info h3 {
+      margin-bottom: 0.3rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #023047;
+    }
+    .car-info p {
+      margin-bottom: 0.2rem;
+      color: #555;
+      font-size: 0.9rem;
+    }
+    .price {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #0077b6;
+      user-select: none;
+    }
+
+    /* Contact Section */
+    section.contact-container {
+      max-width: 900px;
+      margin: 0 auto 3rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      padding: 0 2rem;
+    }
+    .address-card {
+      background: white;
+      padding: 1.3rem 1.5rem;
+      border-radius: 12px;
+      width: 250px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+      user-select: none;
+    }
+    .address-card:hover,
+    .address-card:focus-within {
+      transform: scale(1.05);
+      outline: 3px solid #023047;
+    }
+    .address-card h3 {
+      margin-bottom: 0.6rem;
+      color: #023047;
+    }
+    .address-card p {
+      color: #555;
+      font-size: 0.9rem;
+    }
+
+    /* Booking Section */
+    section.order {
+      max-width: 450px;
+      margin: 0 auto 3rem;
+      padding: 2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      text-align: center;
+    }
+    section.order h2 {
+      margin-bottom: 1.8rem;
+      font-size: 2rem;
+      user-select: none;
+      color: #023047;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.3rem;
+    }
+    .input-box input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1.5px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    .input-box input:focus {
+      border-color: #0077b6;
+      outline: none;
+    }
+    .btn {
+      background-color: #0077b6;
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 700;
+      transition: opacity 0.3s ease;
+      user-select: none;
+    }
+    .btn:hover,
+    .btn:focus {
+      opacity: 0.85;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar" role="navigation" aria-label="Main Navigation">
+    <div class="logo" tabindex="0">CH🚗</div>
+    <a href="#home" class="brand"><h1>CAR HUB</h1></a>
+    
+      <li><a href="#home" tabindex="0">Home</a></li>
+      <li><a href="#cars" tabindex="0">Cars</a></li>
+      <li><a href="#contact" tabindex="0">Contact</a></li>
+      <li><a href="#order" tabindex="0">Book</a></li>
+    </ul>
+  </nav>
+
+  <!-- Home Section -->
+  <section id="home" class="home" tabindex="0" aria-label="Welcome Section">
+    <h1>Welcome to Car Hub</h1>
+    <p>Your dream car is just a few clicks away. Select and book with confidence.</p>
+  </section>
+
+  <!-- Cars Section -->
+  <section id="cars" aria-label="Available Cars">
+    <h2>Our Cars</h2>
+    <div class="car-grid" role="list">
+
+      <!-- 10 cars only -->
+      <div class="car-card" role="listitem" data-brand="Maruti" data-model="Swift" data-price="₹5,20,000" tabindex="0">
+        <img src="/images.jpeg"alt="Maruti Swift" />
+        <div class="car-info">
+          <h3>Maruti Swift</h3>
+          <p>2019 • 25,000 km</p>
+          <p class="price">₹5.2 Lakh</p>
+        </div>
+      </div>
+
+      <div class="car-card" role="listitem" data-brand="Hyundai" data-model="i20" data-price="₹6,00,000" tabindex="0">
+        <img src="/3.jpeg" alt="Hyundai i20" />
+        <div class="car-info">
+          <h3>Hyundai i20</h3>
+          <p>2020 • 30,000 km</p>
+          <p class="price">₹6.0 Lakh</p>
+        </div>
+      </div>
+
+      <div class="car-card" role="listitem" data-brand="Honda" data-model="City" data-price="₹8,50,000" tabindex="0">
+        <img src="/5.jpg" alt="Honda City" />
+        <div class="car-info">
+          <h3>Honda City</h3>
+          <p>2019 • 28,000 km</p>
+          <p class="price">₹8.5 Lakh</p>
+        </div>
+      </div>
+
+      <div class="car-card" role="listitem" data-brand="Toyota" data-model="Innova" data-price="₹12,00,000" tabindex="0">
+        <img src="/4.jpg" alt="Toyota Innova" />
+        <div class="car-info">
+          <h3>Toyota Innova</h3>
+          <p>2018 • 40,000 km</p>
+          <p class="price">₹12.0 Lakh</p>
+        </div>
+      </div>
+
+      <div class="car-card" role="listitem" data-brand="Ford" data-model="EcoSport" data-price="₹9,90,000" tabindex="0">
+        <img src="/2.jpeg" alt="Ford EcoSport" />
+        <div class="car-info">
+          <h3>Ford EcoSport</h3>
+          <p>2021 • 18,500 km</p>
+          <p class="price">₹9.9 Lakh</p>
+        </div>
+      </div>
+
+      <div class="car-card" role="listitem" data-brand="Volkswagen" data-model="Polo" data-price="₹7,50,000" tabindex="0">
+        <img src="/8.jpg" alt="Volkswagen Polo" />
+        <div class="car-info">
+          <h3>Volkswagen Polo</h3>
+          <p>2022 • 14,000 km</p>
+          <p class="price">₹7.5 Lakh</p>
+        </div>
+      </div>
+
+      <div class="car-card" role="listitem" data-brand="Mahindra" data-model="XUV500" data-price="₹16,00,000" tabindex="0">
+        <img src="/6.jpeg" alt="Mahindra XUV500" />
+        <div class="car-info">
+          <h3>Mahindra XUV500</h3>
+          <p>2021 • 20,000 km</p>
+          <p class="price">₹16.0 Lakh</p>
+        </div>
+      </div>
+
+      <div class="car-card" role="listitem" data-brand="Renault" data-model="Duster" data-price="₹8,90,000" tabindex="0">
+        <img src="/7.jpg" alt="Renault Duster" />
+        <div class="car-info">
+          <h3>Renault Duster</h3>
+          <p>2022 • 17,000 km</p>
+          <p class="price">₹8.9 Lakh</p>
+        </div>
+      </div>
+
+      <div class="car-card" role="listitem" data-brand="Nissan" data-model="Magnite" data-price="₹7,60,000" tabindex="0">
+        <img src="/1.jpeg" alt="Nissan Magnite" />
+        <div class="car-info">
+          <h3>Nissan Magnite</h3>
+          <p>2021 • 15,500 km</p>
+          <p class="price">₹7.6 Lakh</p>
+        </div>
+      </div>
+
+     
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-container" aria-label="Contact Information">
+    <div class="address-card" tabindex="0">
+      <h3>Address</h3>
+      <p>123 Colorful Ave, Tech City,Chennai</p>
+    </div>
+    <div class="address-card" tabindex="0">
+      <h3>Phone</h3>
+      <p>+1 234 567 8900</p>
+    </div>
+    <div class="address-card" tabindex="0">
+      <h3>Email</h3>
+      <p>infocarhub@gmail.com</p>
+    </div>
+  </section>
+
+  <!-- Booking Section -->
+  <section id="order" class="order" aria-label="Book Your Car">
+    <h2>Book Your Dream Car</h2>
+    <form id="booking-form" aria-live="polite" aria-describedby="form-status">
+      <div class="input-box">
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Your Full Name"
+          required
+          aria-required="true"
+          autocomplete="name"
+        />
+      </div>
+      <div class="input-box">
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Your Email"
+          required
+          aria-required="true"
+          autocomplete="email"
+        />
+      </div>
+      <div class="input-box">
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          placeholder="Your Phone Number"
+          required
+          aria-required="true"
+          autocomplete="tel"
+        />
+      </div>
+      <button type="submit" class="btn">Book Now</button>
+      <p id="form-status" role="alert" style="margin-top:1rem; color:#0077b6; font-weight:600;"></p>
+    </form>
+  </section>
+<script>
+    // Select car card functionality
+    const carCards = document.querySelectorAll(".car-card");
+    let selectedCar = null;
+
+    carCards.forEach((card) => {
+      card.addEventListener("click", () => {
+        if (selectedCar) {
+          selectedCar.classList.remove("selected");
+        }
+        card.classList.add("selected");
+        selectedCar = card;
+      });
+
+      // Allow keyboard selection with Enter/Space
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          card.click();
+        }
+      });
+    });
+
+    // Simple form submission handler
+    document.getElementById("booking-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = this.name.value.trim();
+      const email = this.email.value.trim();
+      const phone = this.phone.value.trim();
+
+      if (!selectedCar) {
+        alert("Please select a car before booking.");
+        return;
+      }
+
+      if (name && email && phone) {
+        this.reset();
+        const carName = selectedCar.querySelector("h3").textContent;
+        document.getElementById("form-status").textContent =
+          `Thank you, ${name}! Your booking for the ${carName} has been received.`;
+        selectedCar.classList.remove("selected");
+        selectedCar = null;
+      } else {
+        alert("Please fill out all fields.");
+      }
+    });
+  </script>
+
+</body>
+</html>
